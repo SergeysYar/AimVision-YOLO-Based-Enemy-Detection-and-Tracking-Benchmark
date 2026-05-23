@@ -78,10 +78,19 @@ uv run python scripts/run_gui.py
 - Detection success rate
 
 ## Индекс документации
-- Основной README: `../README.md`
-- Подготовка датасета: `dataset_preparation.md`
-- Математическая модель: `math_model.md`
-- Описание проекта: `project_description.md`
-- Шаблон отчета: `benchmark_results_template.md`
-- Гайд по GUI: `gui_guide.md`
-- Troubleshooting: `troubleshooting.md`
+- Основной README: [../README.md](../README.md)  
+  Для чего: обзор проекта, быстрый старт, команды запуска и архитектура.
+- Гайд по датасету: [../datasets/README.md](../datasets/README.md) / [../datasets/README.ru.md](../datasets/README.ru.md)  
+  Для чего: структура папок датасета и базовый workflow подготовки.
+- Подготовка датасета: [dataset_preparation.md](dataset_preparation.md) / [dataset_preparation.ru.md](dataset_preparation.ru.md)  
+  Для чего: пошаговая инструкция по extraction/annotation/split.
+- Математическая модель: [math_model.md](math_model.md) / [math_model.ru.md](math_model.ru.md)  
+  Для чего: теоретическая часть (IoU, NMS, трекинг, matching).
+- Описание проекта: [project_description.md](project_description.md) / [project_description.ru.md](project_description.ru.md)  
+  Для чего: формулировка задачи, ограничения и цели бенчмарка.
+- Шаблон отчета: [benchmark_results_template.md](benchmark_results_template.md) / [benchmark_results_template.ru.md](benchmark_results_template.ru.md)  
+  Для чего: единый шаблон представления результатов.
+- Гайд по GUI: [gui_guide.md](gui_guide.md) / [gui_guide.ru.md](gui_guide.ru.md)  
+  Для чего: работа с вкладками GUI и разметкой.
+- Troubleshooting: [troubleshooting.md](troubleshooting.md) / [troubleshooting.ru.md](troubleshooting.ru.md)  
+  Для чего: быстрые решения частых ошибок.

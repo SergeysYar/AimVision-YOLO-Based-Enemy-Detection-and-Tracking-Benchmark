@@ -136,13 +136,20 @@ AimVision/
 ```
 
 ## Documentation Index
-- Dataset guide: [datasets/README.md](datasets/README.md)
-- Dataset preparation: [docs/dataset_preparation.md](docs/dataset_preparation.md)
-- Mathematical model: [docs/math_model.md](docs/math_model.md)
-- Project description: [docs/project_description.md](docs/project_description.md)
-- Benchmark template: [docs/benchmark_results_template.md](docs/benchmark_results_template.md)
-- GUI and annotation guide: [docs/gui_guide.md](docs/gui_guide.md)
-- Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md)
+- Dataset guide: [datasets/README.md](datasets/README.md) / [datasets/README.ru.md](datasets/README.ru.md)  
+  Purpose: folder structure, where to put videos/labels, and split flow.
+- Dataset preparation: [docs/dataset_preparation.md](docs/dataset_preparation.md) / [docs/dataset_preparation.ru.md](docs/dataset_preparation.ru.md)  
+  Purpose: step-by-step frame extraction and YOLO annotation process.
+- Mathematical model: [docs/math_model.md](docs/math_model.md) / [docs/math_model.ru.md](docs/math_model.ru.md)  
+  Purpose: formulas and theory (IoU, NMS, Kalman idea, Hungarian matching).
+- Project description: [docs/project_description.md](docs/project_description.md) / [docs/project_description.ru.md](docs/project_description.ru.md)  
+  Purpose: scope, restrictions, inputs/outputs, and full pipeline intent.
+- Benchmark template: [docs/benchmark_results_template.md](docs/benchmark_results_template.md) / [docs/benchmark_results_template.ru.md](docs/benchmark_results_template.ru.md)  
+  Purpose: standardized table for reporting comparable tracker results.
+- GUI guide: [docs/gui_guide.md](docs/gui_guide.md) / [docs/gui_guide.ru.md](docs/gui_guide.ru.md)  
+  Purpose: how to use tabs and annotation studio efficiently.
+- Troubleshooting: [docs/troubleshooting.md](docs/troubleshooting.md) / [docs/troubleshooting.ru.md](docs/troubleshooting.ru.md)  
+  Purpose: fixes for common setup/runtime issues.
 
 ## Reproducibility Notes
 - Keep source videos and labels versioned per experiment.
