@@ -1,9 +1,9 @@
 # AimVision: YOLO-бенчмарк детекции и трекинга
 
-Офлайн-проект по компьютерному зрению для детекции и трекинга игровых сущностей (в стиле Counter-Strike) на видео.
+Офлайн-проект по компьютерному зрению для детекции и трекинга игровых сущностей (в стиле FPS) на записанных видео.
 
-## Важно: безопасность и ограничения
-Этот проект **не является** читом, аимботом или системой автоматизации игры.
+## Важно: безопасность
+Проект **не является** читом, аимботом или автоматизацией игры.
 
 - Нет управления мышью/клавиатурой
 - Нет чтения памяти процесса
@@ -11,60 +11,38 @@
 - Нет обхода античита
 - Нет взаимодействия с запущенной игрой
 
-Проект работает только с офлайн-видео, скриншотами и синтетическими роликами.
+Использование только для офлайн-анализа, обучения и портфолио.
 
-## Возможности
-- Подготовка датасета из видеозаписей
-- Обучение детектора на базе YOLO (Ultralytics)
-- Инференс по видео с аннотированным выводом
-- Трекинг несколькими методами:
-  - SORT
-  - ByteTrack-подобный подход
-  - OpenCV CSRT/KCF
-  - Кастомный трекер (с нуля)
-- Сравнение трекеров на одном наборе видео
-- Экспорт:
-  - аннотированные видео
-  - CSV-логи треков
-  - Markdown/CSV отчёты с метриками
-
-## Структура датасета
-```text
-datasets/
-  raw_videos/
-  frames/
-  labels/
-  train/
-    images/
-    labels/
-  val/
-    images/
-    labels/
-  test/
-    images/
-    labels/
-  dataset.yaml
-```
-
-## Установка
+## Быстрый старт (uv)
+1. Установите `uv`: https://docs.astral.sh/uv/
+2. Установите зависимости:
 ```bash
 uv sync
 ```
+3. Запустите GUI:
+```bash
+uv run python scripts/run_gui.py
+```
 
-## Основные команды
+## Основной workflow (CLI)
 Извлечение кадров:
 ```bash
-uv run python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo
+uv run python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo --every-n 2
+```
+
+Сплит датасета:
+```bash
+uv run python src/data/split_dataset.py --frames datasets/frames/demo --labels datasets/labels --dataset-root datasets
 ```
 
 Обучение:
 ```bash
-uv run python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640
+uv run python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640 --batch 16 --lr0 0.01
 ```
 
 Инференс:
 ```bash
-uv run python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4
+uv run python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4 --conf 0.25
 ```
 
 Бенчмарк трекеров:
@@ -73,20 +51,21 @@ uv run python scripts/run_benchmark.py --weights runs/detect/train/weights/best.
 ```
 
 ## GUI (центр управления)
+Запуск:
 ```bash
 uv run python scripts/run_gui.py
 ```
 
 Вкладки:
-- `Dataset`: извлечение кадров из видео.
-- `Training`: запуск обучения YOLO.
-- `Inference`: инференс и экспорт аннотированного видео.
-- `Benchmark`: сравнение трекеров.
-- `Annotation Studio`: отдельная рабочая зона для разметки датасета.
+- `Dataset`: извлечение кадров
+- `Training`: обучение YOLO
+- `Inference`: детекция на одном видео
+- `Benchmark`: сравнение трекеров
+- `Annotation Studio`: разметка датасета
 
 Интеллектуальные функции в `Annotation Studio`:
-- `Auto-annotate with YOLO` для авторазметки текущего кадра.
-- `Smart Copy Box to Next Frame` для быстрого переноса бокса на следующий кадр.
+- `Auto-annotate with YOLO`
+- `Smart Copy Box to Next Frame`
 
 ## Метрики
 - Average FPS
@@ -98,10 +77,11 @@ uv run python scripts/run_gui.py
 - Processing time per frame
 - Detection success rate
 
-## Дополнительная документация
-- Подготовка датасета: `docs/dataset_preparation.md`
-- Математическая модель: `docs/math_model.md`
-- Шаблон отчёта: `docs/benchmark_results_template.md`
-
-## Назначение
-Проект предназначен для обучения, исследований и портфолио в области CV/ML.
+## Индекс документации
+- Основной README: `../README.md`
+- Подготовка датасета: `dataset_preparation.md`
+- Математическая модель: `math_model.md`
+- Описание проекта: `project_description.md`
+- Шаблон отчета: `benchmark_results_template.md`
+- Гайд по GUI: `gui_guide.md`
+- Troubleshooting: `troubleshooting.md`
