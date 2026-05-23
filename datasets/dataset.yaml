@@ -1,0 +1,10 @@
+path: datasets
+train: train/images
+val: val/images
+test: test/images
+
+names:
+  0: enemy
+  1: teammate
+  2: weapon
+  3: head

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aimvision"
+version = "0.1.0"
+description = "YOLO-based enemy detection and tracking benchmark for offline gameplay video analysis."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "AimVision Contributors" }]
+dependencies = [
+  "ultralytics>=8.2.0",
+  "opencv-python>=4.9.0.80",
+  "numpy>=1.26.0",
+  "pandas>=2.2.0",
+  "matplotlib>=3.8.0",
+  "tqdm>=4.66.0",
+  "pyyaml>=6.0.1",
+  "scipy>=1.11.0",
+]
+
+[tool.setuptools]
+package-dir = { "" = "." }

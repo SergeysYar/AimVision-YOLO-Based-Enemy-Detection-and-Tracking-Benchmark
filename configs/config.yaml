@@ -1,0 +1,23 @@
+project:
+  name: AimVision
+  description: Offline CV benchmark for detection and tracking in FPS-style gameplay videos.
+
+dataset:
+  root: datasets
+  yaml: datasets/dataset.yaml
+  classes: [enemy, teammate, weapon, head]
+
+training:
+  model: yolov8n.pt
+  epochs: 50
+  imgsz: 640
+  batch: 16
+  lr0: 0.01
+
+inference:
+  conf: 0.25
+
+benchmark:
+  trackers: [sort, bytetrack, opencv, custom]
+  max_videos: 5
+  output_report: outputs/reports/benchmark.md
