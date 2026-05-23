@@ -1,79 +1,96 @@
 # Mathematical Model
 
-## 1. Object Detection Formulation
-Given image \(I \in \mathbb{R}^{H \times W \times 3}\), detector \(f_\theta\) predicts:
-- class probability vector \(p(c \mid I)\),
-- bounding box \(b = (x_1, y_1, x_2, y_2)\),
-- confidence \(s \in [0,1]\).
+This version avoids LaTeX-only syntax and uses GitHub-friendly plain formulas.
 
-A detection is:
-\[
+## 1. Object Detection Formulation
+Input image:
+- `I` with shape `H x W x 3`
+
+Detector output for object `i`:
+- `b_i = (x1, y1, x2, y2)` (bounding box)
+- `c_i` (class id)
+- `s_i` (confidence, from 0 to 1)
+
+Detection tuple:
+```text
 d_i = (b_i, c_i, s_i)
-\]
+```
 
 ## 2. Bounding Box Representation
-Two common forms:
-- Corner form: \((x_1, y_1, x_2, y_2)\)
-- Center form: \((x_c, y_c, w, h)\)
+Two common formats:
+- Corner format: `(x1, y1, x2, y2)`
+- Center format: `(xc, yc, w, h)`
 
 Conversion:
-\[
-x_c = \frac{x_1 + x_2}{2},\quad y_c = \frac{y_1 + y_2}{2},\quad w = x_2 - x_1,\quad h = y_2 - y_1
-\]
+```text
+xc = (x1 + x2) / 2
+yc = (y1 + y2) / 2
+w  = x2 - x1
+h  = y2 - y1
+```
 
 ## 3. Confidence Score
-Typical detector confidence:
-\[
-s = p(\text{object}) \cdot p(c \mid \text{object})
-\]
-Detections below threshold \(\tau\) are removed.
+Typical interpretation:
+```text
+s = P(object) * P(class | object)
+```
+Detections with `s < threshold` are filtered out.
 
-## 4. Intersection over Union (IoU)
-For boxes \(A\) and \(B\):
-\[
-\text{IoU}(A,B)=\frac{|A \cap B|}{|A \cup B|}
-\]
-Higher IoU indicates stronger overlap.
+## 4. IoU (Intersection over Union)
+For boxes `A` and `B`:
+```text
+IoU(A, B) = area(A ∩ B) / area(A ∪ B)
+```
+`IoU` is in `[0, 1]`. Higher means better overlap.
 
 ## 5. Non-Maximum Suppression (NMS)
-Sort detections by confidence, keep highest score box, suppress others with IoU above threshold \(\tau_{nms}\). Repeat until done.
+1. Sort detections by confidence.
+2. Keep highest-confidence box.
+3. Remove boxes with IoU above `nms_threshold`.
+4. Repeat.
 
-## 6. Tracking-by-Detection
-At frame \(t\):
-1. Run detector to get \(D_t=\{d_i^t\}\).
-2. Predict existing tracks \(\hat{T}_t\).
-3. Match detections and tracks.
-4. Update matched tracks, create new tracks for unmatched detections, age unmatched tracks.
+## 6. Tracking-by-Detection Pipeline
+For frame `t`:
+1. Run detector and get `D_t`.
+2. Predict current track states.
+3. Match detections to tracks.
+4. Update matched tracks.
+5. Create new tracks for unmatched detections.
+6. Age and remove stale tracks.
 
 ## 7. Kalman Filter Idea (SORT)
-Track state can include:
-\[
-\mathbf{x}_t = [x_c, y_c, w, h, \dot{x}_c, \dot{y}_c, \dot{w}, \dot{h}]^\top
-\]
+State vector example:
+```text
+x_t = [xc, yc, w, h, vxc, vyc, vw, vh]
+```
 Prediction:
-\[
-\mathbf{x}_{t|t-1} = \mathbf{F}\mathbf{x}_{t-1|t-1}
-\]
-Update with measurement \(\mathbf{z}_t\) from detection using Kalman gain \(K_t\).
+```text
+x_t_pred = F * x_(t-1)
+```
+Then correct prediction with measurement from detector.
 
-## 8. Hungarian Assignment
-Build cost matrix \(C\) between predicted tracks and detections. Example:
-\[
-C_{ij} = 1 - \text{IoU}(\hat{b}_i, b_j)
-\]
-Solve minimum-cost bipartite matching with Hungarian algorithm.
+## 8. Hungarian Matching
+Cost matrix between predicted tracks `i` and detections `j`:
+```text
+C[i, j] = 1 - IoU(track_i, det_j)
+```
+Hungarian algorithm finds minimal total matching cost.
 
-## 9. Velocity Prediction
-Simple constant velocity:
-\[
-\hat{x}_{c,t} = x_{c,t-1} + \dot{x}_{c,t-1},\quad \hat{y}_{c,t} = y_{c,t-1} + \dot{y}_{c,t-1}
-\]
-This stabilizes identity over short occlusions.
+## 9. Constant Velocity Prediction
+Simple motion model:
+```text
+xc_t = xc_(t-1) + vxc_(t-1)
+yc_t = yc_(t-1) + vyc_(t-1)
+```
+This helps preserve identity through short occlusions.
 
 ## 10. Assignment Cost Variants
-Common costs:
-\[
-C_{ij}^{\text{IoU}} = 1-\text{IoU}_{ij},\quad
-C_{ij}^{\text{dist}} = \lVert \mathbf{m}_i - \mathbf{m}_j \rVert_2
-\]
-where \(\mathbf{m}\) is center point. Custom trackers often use distance-only association.
+IoU-based:
+```text
+C_iou = 1 - IoU
+```
+Distance-based:
+```text
+C_dist = sqrt((x1 - x2)^2 + (y1 - y2)^2)
+```
+Custom lightweight trackers often rely on center-distance cost.
