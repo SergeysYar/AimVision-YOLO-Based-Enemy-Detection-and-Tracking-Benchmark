@@ -48,36 +48,33 @@ datasets/
 
 ## Установка
 ```bash
-python -m venv .venv
-# Windows
-.venv\\Scripts\\activate
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Основные команды
 Извлечение кадров:
 ```bash
-python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo
+uv run python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo
 ```
 
 Обучение:
 ```bash
-python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640
+uv run python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640
 ```
 
 Инференс:
 ```bash
-python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4
+uv run python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4
 ```
 
 Бенчмарк трекеров:
 ```bash
-python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
+uv run python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
 ```
 
 ## GUI (центр управления)
 ```bash
-python scripts/run_gui.py
+uv run python scripts/run_gui.py
 ```
 
 Вкладки:

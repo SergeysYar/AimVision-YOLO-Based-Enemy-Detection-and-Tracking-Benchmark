@@ -6,7 +6,7 @@
 
 ## 2. Extract Frames
 ```bash
-python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo --every-n 2
+uv run python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo --every-n 2
 ```
 
 ## 3. Annotate in YOLO Format
@@ -21,7 +21,7 @@ Classes:
 
 ## 4. Train/Val/Test Split
 ```bash
-python src/data/split_dataset.py --frames datasets/frames/demo --labels datasets/labels --dataset-root datasets
+uv run python src/data/split_dataset.py --frames datasets/frames/demo --labels datasets/labels --dataset-root datasets
 ```
 
 ## 5. Verify Dataset YAML

@@ -54,35 +54,32 @@ datasets/
 
 ## Installation
 ```bash
-python -m venv .venv
-# Windows
-.venv\\Scripts\\activate
-pip install -r requirements.txt
+uv sync
 ```
 
 ## Training
 ```bash
-python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640
+uv run python src/detection/train_yolo.py --data datasets/dataset.yaml --model yolov8n.pt --epochs 50 --imgsz 640
 ```
 
 ## Inference
 ```bash
-python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4
+uv run python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt --video datasets/raw_videos/demo.mp4 --output outputs/videos/demo_detected.mp4
 ```
 
 ## Frame Extraction
 ```bash
-python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo
+uv run python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output datasets/frames/demo
 ```
 
 ## Benchmark
 ```bash
-python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
+uv run python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
 ```
 
 ## GUI Control Center
 ```bash
-python scripts/run_gui.py
+uv run python scripts/run_gui.py
 ```
 
 Tabs:
