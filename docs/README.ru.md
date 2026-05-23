@@ -75,6 +75,22 @@ python src/detection/infer_yolo.py --weights runs/detect/train/weights/best.pt -
 python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
 ```
 
+## GUI (центр управления)
+```bash
+python scripts/run_gui.py
+```
+
+Вкладки:
+- `Dataset`: извлечение кадров из видео.
+- `Training`: запуск обучения YOLO.
+- `Inference`: инференс и экспорт аннотированного видео.
+- `Benchmark`: сравнение трекеров.
+- `Annotation Studio`: отдельная рабочая зона для разметки датасета.
+
+Интеллектуальные функции в `Annotation Studio`:
+- `Auto-annotate with YOLO` для авторазметки текущего кадра.
+- `Smart Copy Box to Next Frame` для быстрого переноса бокса на следующий кадр.
+
 ## Метрики
 - Average FPS
 - Lost tracks

@@ -80,6 +80,25 @@ python src/data/extract_frames.py --video datasets/raw_videos/demo.mp4 --output 
 python scripts/run_benchmark.py --weights runs/detect/train/weights/best.pt --videos datasets/raw_videos --trackers sort bytetrack opencv custom --output outputs/reports/benchmark.md
 ```
 
+## GUI Control Center
+```bash
+python scripts/run_gui.py
+```
+
+Tabs:
+- `Dataset`: frame extraction runner.
+- `Training`: YOLO training controls.
+- `Inference`: video detection export.
+- `Benchmark`: tracker comparison run.
+- `Annotation Studio`: full dataset labeling workspace.
+
+Annotation Studio includes:
+- Manual box drawing with class picker.
+- Save labels in YOLO format.
+- Prev/Next navigation with autosave.
+- `Auto-annotate with YOLO` using your trained weights.
+- `Smart Copy Box to Next Frame` for fast sequential labeling.
+
 ## Metrics
 - Average FPS
 - Lost tracks
@@ -117,6 +136,9 @@ AimVision/
     evaluation/
       metrics.py
       compare_trackers.py
+    gui/
+      main_app.py
+      annotation_tool.py
     utils/
       video_info.py
       visualization.py
@@ -125,6 +147,7 @@ AimVision/
     run_training.py
     run_video_demo.py
     run_benchmark.py
+    run_gui.py
   outputs/
     videos/
     reports/
